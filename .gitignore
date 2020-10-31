@@ -18,3 +18,7 @@
 .directory
 *.db
 documentation/html
+
+#IDE
+.idea/
+cmake-build-debug/

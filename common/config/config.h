@@ -37,6 +37,7 @@ struct GlobalConfig {
 	/** MAC address of mEthernetDevice*/
 	std::string mMac;
 	uint64_t mStationID;
+    bool mIsRSU;
 
 	// Taken from http://stackoverflow.com/questions/7326123/convert-mac-address-stdstring-into-uint64-t
 	uint64_t stringToMac(std::string const& s) {
@@ -64,6 +65,7 @@ struct GlobalConfig {
 
 		mExpNo = pt.get("global.expNo", 1);
 		mEthernetDevice = pt.get("global.ethernetDevice", "notDefined");
+		mIsRSU = pt.get("global.isRSU", false);
 
 		//get MAC Address
 		std::string file = std::string("/sys/class/net/")+ mEthernetDevice + "/address";

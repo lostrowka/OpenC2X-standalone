@@ -2,4 +2,6 @@
 	<expNo>1</expNo> <!-- Experiment number -->
 	<ethernetDevice>lo</ethernetDevice> <!--interface name to be used. get via console: "ip link show" -->
 	<stationId>123456789</stationId> <!-- station id assigned to the station. Must be unique for all stations -->
+
+    <isRSU>0</isRSU>
 </global>

@@ -24,7 +24,7 @@
 #define ELPP_NO_DEFAULT_LOG_FILE
 #define PRINT_STATS 1
 
-#define IGNORE_STATS true	//TODO: set to false when compiling on gericom, alix, ...
+#define IGNORE_STATS false	//TODO: set to false when compiling on gericom, alix, ...
 
 #if IGNORE_STATS
 #define NL80211_CMD_FLUSH_STATS 113

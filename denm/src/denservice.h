@@ -76,7 +76,8 @@ public:
 	/** Generates a new DENM
 	 *
 	 */
-	DENM_t* generateDenm();
+	DENM_t* generateDenm(std::string Content);
+	AlacarteContainer_t* generateAlacarteContainer();
 
 	/** Converts ASN1 DENM structure into DENM protocol buffer.
 	 * @return The newly generated DENM protocol buffer.

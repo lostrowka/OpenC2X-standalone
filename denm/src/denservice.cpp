@@ -166,8 +166,8 @@ void DenService::send(triggerPackage::TRIGGER trigger) {
 	string serializedData;
 	dataPackage::DATA data;
 
-	// create denm
-	DENM_t* denm = generateDenm();
+    // create denm
+	DENM_t* denm = generateDenm(trigger.content());
 	// asn_fprint(stdout, &asn_DEF_DENM, denm);
 	vector<uint8_t> encodedDenm = mMsgUtils->encodeMessage(&asn_DEF_DENM, denm);
 	string strDenm(encodedDenm.begin(), encodedDenm.end());
@@ -193,7 +193,7 @@ void DenService::send(triggerPackage::TRIGGER trigger) {
 }
 
 //generate a new DENM
-DENM_t* DenService::generateDenm() {
+DENM_t* DenService::generateDenm(std::string triggerContent) {
 	DENM_t* denm = static_cast<DENM_t*>(calloc(1, sizeof(DENM_t)));
 	if (!denm) {
 		throw runtime_error("could not allocate DENM_t");
@@ -216,7 +216,7 @@ DENM_t* DenService::generateDenm() {
 
 	denm->denm.management.detectionTime = *timestamp;
 	denm->denm.management.referenceTime = *timestamp;
-	denm->denm.management.stationType = StationType_passengerCar;
+	denm->denm.management.stationType = mGlobalConfig.mIsRSU ? StationType_roadSideUnit : StationType_passengerCar;
 	mMutexLatestGps.lock();
 	if(mLatestGps.has_time()) {	//only add gps if valid data is available
 		denm->denm.management.eventPosition.latitude = mLatestGps.latitude() * 10000000; // in one-tenth of microdegrees
@@ -234,7 +234,24 @@ DENM_t* DenService::generateDenm() {
 	denm->denm.management.eventPosition.positionConfidenceEllipse.semiMinorConfidence = SemiAxisLength_unavailable;
 	denm->denm.management.validityDuration = static_cast<long*>(calloc(sizeof(long), 1));
 	*denm->denm.management.validityDuration = 60;
+
+    if(triggerContent == "SpeedLimit") {
+        mLogger->logInfo("Generating Alacarte");
+        denm->denm.alacarte = generateAlacarteContainer();
+    }
 	return denm;
+}
+
+AlacarteContainer_t* DenService::generateAlacarteContainer() {
+    // TODO: Replace static speedLim with parsed from JSON
+    int64_t speedLim = 10;
+
+    auto *alacarteContainer = static_cast<AlacarteContainer_t*>(calloc(1, sizeof(AlacarteContainer_t)));
+    alacarteContainer->speedLimit = static_cast<SpeedLimitContainer_t*>(calloc(1, sizeof(SpeedLimitContainer_t)));
+    //
+    alacarteContainer->speedLimit->speedLimit = new SpeedLimit_t(speedLim);
+
+    return alacarteContainer;
 }
 
 denmPackage::DENM DenService::convertAsn1toProtoBuf(DENM_t* denm) {
@@ -250,6 +267,7 @@ denmPackage::DENM DenService::convertAsn1toProtoBuf(DENM_t* denm) {
 	// DENM containers
 	its::DENMessage* denmMsg = new its::DENMessage;
 	its::DENMManagementContainer* mgtCtr = new its::DENMManagementContainer;
+	its::DENMAlacarteContainer* alcCtr = new its::DENMAlacarteContainer;
 	mgtCtr->set_stationid(denm->denm.management.actionID.originatingStationID);
 	mgtCtr->set_sequencenumber(denm->denm.management.actionID.sequenceNumber);
 	//mgtCtr->set_detectiontime(denm->denm.management.detectionTime);
@@ -265,6 +283,11 @@ denmPackage::DENM DenService::convertAsn1toProtoBuf(DENM_t* denm) {
 		mgtCtr->set_validityduration(*denm->denm.management.validityDuration);
 	}
 	mgtCtr->set_stationtype(denm->denm.management.stationType);
+	if(denm->denm.alacarte != nullptr) {
+        // A La Carte Container is optional
+        alcCtr->set_speedlimit(*denm->denm.alacarte->speedLimit->speedLimit);
+        denmMsg->set_allocated_alacartecontainer(alcCtr);
+	}
 	denmMsg->set_allocated_managementcontainer(mgtCtr);
 	denmProto.set_allocated_msg(denmMsg);
 	return denmProto;

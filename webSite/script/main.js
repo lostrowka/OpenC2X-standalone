@@ -98,7 +98,9 @@ denmData = {
 						"longitude" : denm.msg.managementContainer.longitude/10000000,
 						"altitude" : denm.msg.managementContainer.altitude,
 						"stationType" : isVehicle,
-						"speedLimit" : denm.msg.alacarteContainer.speedLimit
+					}
+					if (denm.msg.alacarteContainer != undefined) {
+						table[stationID]["speedLimit"] = denm.msg.alacarteContainer.speedLimit
 					}
 				}
 			});

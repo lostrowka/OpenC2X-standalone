@@ -25,6 +25,7 @@ extern "C" {
 struct ImpactReductionContainer;
 struct RoadWorksContainerExtended;
 struct StationaryVehicleContainer;
+struct SpeedLimitContainer;
 
 /* AlacarteContainer */
 typedef struct AlacarteContainer {
@@ -34,6 +35,7 @@ typedef struct AlacarteContainer {
 	struct RoadWorksContainerExtended	*roadWorks	/* OPTIONAL */;
 	PositioningSolutionType_t	*positioningSolution	/* OPTIONAL */;
 	struct StationaryVehicleContainer	*stationaryVehicle	/* OPTIONAL */;
+	struct SpeedLimitContainer	*speedLimit	/* OPTIONAL */;
 	/*
 	 * This type is extensible,
 	 * possible extensions are below.
@@ -54,6 +56,7 @@ extern asn_TYPE_descriptor_t asn_DEF_AlacarteContainer;
 #include "ImpactReductionContainer.h"
 #include "RoadWorksContainerExtended.h"
 #include "StationaryVehicleContainer.h"
+#include "SpeedLimitContainer.h"
 
 #endif	/* _AlacarteContainer_H_ */
 #include <asn_internal.h>

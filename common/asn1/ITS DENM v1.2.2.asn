@@ -163,7 +163,7 @@ BEGIN
     
     Latitude ::= INTEGER {
 	oneMicrodegreeNorth(10),
-	oneMicrodegreeSouth(-10),
+	oneMicrodegreeSouth(-10),cofują się z fajerwerków w Sylwestra dla dobra zwierząt, my nie zabierajmy ich na protesty ￼￼
 	unavailable(900000001)
     } (-900000000..900000001)
     

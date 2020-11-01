@@ -7,6 +7,7 @@ ASN_MODULE_SOURCES=	\
 	ImpactReductionContainer.c	\
 	RoadWorksContainerExtended.c	\
 	StationaryVehicleContainer.c	\
+	SpeedLimitContainer.c	\
 	AlacarteContainer.c	\
 	Termination.c	\
 	ReferenceDenms.c	\
@@ -170,6 +171,7 @@ ASN_MODULE_HEADERS=	\
 	ImpactReductionContainer.h	\
 	RoadWorksContainerExtended.h	\
 	StationaryVehicleContainer.h	\
+	SpeedLimitContainer.h	\
 	AlacarteContainer.h	\
 	Termination.h	\
 	ReferenceDenms.h	\

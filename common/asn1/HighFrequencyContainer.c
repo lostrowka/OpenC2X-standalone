@@ -33,8 +33,8 @@ static asn_TYPE_member_t asn_MBR_HighFrequencyContainer_1[] = {
 		},
 };
 static asn_TYPE_tag2member_t asn_MAP_HighFrequencyContainer_tag2el_1[] = {
-    { (ASN_TAG_CLASS_CONTEXT | (0 << 2)), 0, 0, 0 }, /* basicVehicleContainerHighFrequency at 162 */
-    { (ASN_TAG_CLASS_CONTEXT | (1 << 2)), 1, 0, 0 } /* rsuContainerHighFrequency at 163 */
+    { (ASN_TAG_CLASS_CONTEXT | (0 << 2)), 0, 0, 0 }, /* basicVehicleContainerHighFrequency at 167 */
+    { (ASN_TAG_CLASS_CONTEXT | (1 << 2)), 1, 0, 0 } /* rsuContainerHighFrequency at 168 */
 };
 static asn_CHOICE_specifics_t asn_SPC_HighFrequencyContainer_specs_1 = {
 	sizeof(struct HighFrequencyContainer),

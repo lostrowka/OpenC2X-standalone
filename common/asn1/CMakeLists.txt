@@ -7,7 +7,8 @@ set(asn1_SRCS
 	ImpactReductionContainer.c	
 	RoadWorksContainerExtended.c	
 	StationaryVehicleContainer.c	
-	AlacarteContainer.c	
+	SpeedLimitContainer.c
+	AlacarteContainer.c
 	Termination.c	
 	ReferenceDenms.c	
 	CAM.c	

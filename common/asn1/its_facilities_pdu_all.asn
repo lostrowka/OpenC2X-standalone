@@ -97,7 +97,11 @@ BEGIN
 	vehicleIdentification  VehicleIdentification OPTIONAL,
 	energyStorageType      EnergyStorageType OPTIONAL
     }
-    
+
+    SpeedLimitContainer ::= SEQUENCE {
+    speedLimit             SpeedLimit OPTIONAL
+    }
+
     AlacarteContainer ::= SEQUENCE {
 	lanePosition        LanePosition OPTIONAL,
 	impactReduction     ImpactReductionContainer OPTIONAL,
@@ -105,6 +109,7 @@ BEGIN
 	roadWorks           RoadWorksContainerExtended OPTIONAL,
 	positioningSolution PositioningSolutionType OPTIONAL,
 	stationaryVehicle   StationaryVehicleContainer OPTIONAL,
+    speedLimit          SpeedLimitContainer OPTIONAL,
 	                    ...
     }
     

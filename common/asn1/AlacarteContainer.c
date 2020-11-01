@@ -8,7 +8,7 @@
 #include "AlacarteContainer.h"
 
 static asn_TYPE_member_t asn_MBR_AlacarteContainer_1[] = {
-	{ ATF_POINTER, 6, offsetof(struct AlacarteContainer, lanePosition),
+	{ ATF_POINTER, 7, offsetof(struct AlacarteContainer, lanePosition),
 		(ASN_TAG_CLASS_CONTEXT | (0 << 2)),
 		-1,	/* IMPLICIT tag at current level */
 		&asn_DEF_LanePosition,
@@ -17,7 +17,7 @@ static asn_TYPE_member_t asn_MBR_AlacarteContainer_1[] = {
 		0,
 		"lanePosition"
 		},
-	{ ATF_POINTER, 5, offsetof(struct AlacarteContainer, impactReduction),
+	{ ATF_POINTER, 6, offsetof(struct AlacarteContainer, impactReduction),
 		(ASN_TAG_CLASS_CONTEXT | (1 << 2)),
 		-1,	/* IMPLICIT tag at current level */
 		&asn_DEF_ImpactReductionContainer,
@@ -26,7 +26,7 @@ static asn_TYPE_member_t asn_MBR_AlacarteContainer_1[] = {
 		0,
 		"impactReduction"
 		},
-	{ ATF_POINTER, 4, offsetof(struct AlacarteContainer, externalTemperature),
+	{ ATF_POINTER, 5, offsetof(struct AlacarteContainer, externalTemperature),
 		(ASN_TAG_CLASS_CONTEXT | (2 << 2)),
 		-1,	/* IMPLICIT tag at current level */
 		&asn_DEF_Temperature,
@@ -35,7 +35,7 @@ static asn_TYPE_member_t asn_MBR_AlacarteContainer_1[] = {
 		0,
 		"externalTemperature"
 		},
-	{ ATF_POINTER, 3, offsetof(struct AlacarteContainer, roadWorks),
+	{ ATF_POINTER, 4, offsetof(struct AlacarteContainer, roadWorks),
 		(ASN_TAG_CLASS_CONTEXT | (3 << 2)),
 		-1,	/* IMPLICIT tag at current level */
 		&asn_DEF_RoadWorksContainerExtended,
@@ -44,7 +44,7 @@ static asn_TYPE_member_t asn_MBR_AlacarteContainer_1[] = {
 		0,
 		"roadWorks"
 		},
-	{ ATF_POINTER, 2, offsetof(struct AlacarteContainer, positioningSolution),
+	{ ATF_POINTER, 3, offsetof(struct AlacarteContainer, positioningSolution),
 		(ASN_TAG_CLASS_CONTEXT | (4 << 2)),
 		-1,	/* IMPLICIT tag at current level */
 		&asn_DEF_PositioningSolutionType,
@@ -53,7 +53,7 @@ static asn_TYPE_member_t asn_MBR_AlacarteContainer_1[] = {
 		0,
 		"positioningSolution"
 		},
-	{ ATF_POINTER, 1, offsetof(struct AlacarteContainer, stationaryVehicle),
+	{ ATF_POINTER, 2, offsetof(struct AlacarteContainer, stationaryVehicle),
 		(ASN_TAG_CLASS_CONTEXT | (5 << 2)),
 		-1,	/* IMPLICIT tag at current level */
 		&asn_DEF_StationaryVehicleContainer,
@@ -62,28 +62,38 @@ static asn_TYPE_member_t asn_MBR_AlacarteContainer_1[] = {
 		0,
 		"stationaryVehicle"
 		},
+	{ ATF_POINTER, 1, offsetof(struct AlacarteContainer, speedLimit),
+		(ASN_TAG_CLASS_CONTEXT | (6 << 2)),
+		-1,	/* IMPLICIT tag at current level */
+		&asn_DEF_SpeedLimitContainer,
+		0,	/* Defer constraints checking to the member type */
+		0,	/* No PER visible constraints */
+		0,
+		"speedLimit"
+		},
 };
-static int asn_MAP_AlacarteContainer_oms_1[] = { 0, 1, 2, 3, 4, 5 };
+static int asn_MAP_AlacarteContainer_oms_1[] = { 0, 1, 2, 3, 4, 5, 6 };
 static ber_tlv_tag_t asn_DEF_AlacarteContainer_tags_1[] = {
 	(ASN_TAG_CLASS_UNIVERSAL | (16 << 2))
 };
 static asn_TYPE_tag2member_t asn_MAP_AlacarteContainer_tag2el_1[] = {
-    { (ASN_TAG_CLASS_CONTEXT | (0 << 2)), 0, 0, 0 }, /* lanePosition at 102 */
-    { (ASN_TAG_CLASS_CONTEXT | (1 << 2)), 1, 0, 0 }, /* impactReduction at 103 */
-    { (ASN_TAG_CLASS_CONTEXT | (2 << 2)), 2, 0, 0 }, /* externalTemperature at 104 */
-    { (ASN_TAG_CLASS_CONTEXT | (3 << 2)), 3, 0, 0 }, /* roadWorks at 105 */
-    { (ASN_TAG_CLASS_CONTEXT | (4 << 2)), 4, 0, 0 }, /* positioningSolution at 106 */
-    { (ASN_TAG_CLASS_CONTEXT | (5 << 2)), 5, 0, 0 } /* stationaryVehicle at 107 */
+    { (ASN_TAG_CLASS_CONTEXT | (0 << 2)), 0, 0, 0 }, /* lanePosition at 106 */
+    { (ASN_TAG_CLASS_CONTEXT | (1 << 2)), 1, 0, 0 }, /* impactReduction at 107 */
+    { (ASN_TAG_CLASS_CONTEXT | (2 << 2)), 2, 0, 0 }, /* externalTemperature at 108 */
+    { (ASN_TAG_CLASS_CONTEXT | (3 << 2)), 3, 0, 0 }, /* roadWorks at 109 */
+    { (ASN_TAG_CLASS_CONTEXT | (4 << 2)), 4, 0, 0 }, /* positioningSolution at 110 */
+    { (ASN_TAG_CLASS_CONTEXT | (5 << 2)), 5, 0, 0 }, /* stationaryVehicle at 111 */
+    { (ASN_TAG_CLASS_CONTEXT | (6 << 2)), 6, 0, 0 } /* speedLimit at 112 */
 };
 static asn_SEQUENCE_specifics_t asn_SPC_AlacarteContainer_specs_1 = {
 	sizeof(struct AlacarteContainer),
 	offsetof(struct AlacarteContainer, _asn_ctx),
 	asn_MAP_AlacarteContainer_tag2el_1,
-	6,	/* Count of tags in the map */
+	7,	/* Count of tags in the map */
 	asn_MAP_AlacarteContainer_oms_1,	/* Optional members */
-	6, 0,	/* Root/Additions */
-	5,	/* Start extensions */
-	7	/* Stop extensions */
+	7, 0,	/* Root/Additions */
+	6,	/* Start extensions */
+	8	/* Stop extensions */
 };
 asn_TYPE_descriptor_t asn_DEF_AlacarteContainer = {
 	"AlacarteContainer",
@@ -106,7 +116,7 @@ asn_TYPE_descriptor_t asn_DEF_AlacarteContainer = {
 		/sizeof(asn_DEF_AlacarteContainer_tags_1[0]), /* 1 */
 	0,	/* No PER visible constraints */
 	asn_MBR_AlacarteContainer_1,
-	6,	/* Elements count */
+	7,	/* Elements count */
 	&asn_SPC_AlacarteContainer_specs_1	/* Additional specs */
 };
 

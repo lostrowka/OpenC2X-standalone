@@ -157,7 +157,7 @@ function requestAC_VI(callback){
  * via http request to httpServer
  */
 function triggerDenm(){
-	$.post(host + ":1188/trigger_denm",JSON.stringify({content: "GUI"}),
+	$.post(host + ":1188/trigger_denm",JSON.stringify({content: "{}"}),
 		function(data,status,xhr){
 			console.log("data: "+data);
 			console.log("status: "+status);
@@ -165,7 +165,7 @@ function triggerDenm(){
 }
 
 function triggerSpeedLimitDenm(){
-	$.post(host + ":1188/trigger_denm",JSON.stringify({content: "SpeedLimit"}),
+	$.post(host + ":1188/trigger_denm",JSON.stringify({content: '{"alacarte": true, "type":"SpeedLimit", "speedLimit": 10}'}),
 		function(data,status,xhr){
 			console.log("data: "+data);
 			console.log("status: "+status);

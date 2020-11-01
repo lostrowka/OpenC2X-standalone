@@ -41,6 +41,7 @@
 #include <common/asn1/DENM.h>
 #include <common/messages/MessageUtils.h>
 #include <mutex>
+#include <jsoncpp/json/value.h>
 
 /**
  * Class that handles the receiving, creating and sending of DEN Messages.
@@ -76,8 +77,15 @@ public:
 	/** Generates a new DENM
 	 *
 	 */
-	DENM_t* generateDenm(std::string Content);
-	AlacarteContainer_t* generateAlacarteContainer();
+	DENM_t* generateDenm(std::string content);
+
+	AlacarteContainer_t* generateAlacarteContainer(Json::Value content);
+
+	/**
+	 * Parse trigger content to populate DENM message
+	 * @param content
+	 */
+    Json::Value parseJSONTriggerContent(std::string content);
 
 	/** Converts ASN1 DENM structure into DENM protocol buffer.
 	 * @return The newly generated DENM protocol buffer.

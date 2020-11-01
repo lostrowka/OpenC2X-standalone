@@ -31,6 +31,7 @@
 #include <chrono>
 #include <string>
 #include <stdlib.h>
+#include <jsoncpp/json/json.h>
 #include <common/utility/Utils.h>
 #include <common/asn1/TimestampIts.h>
 
@@ -235,21 +236,25 @@ DENM_t* DenService::generateDenm(std::string triggerContent) {
 	denm->denm.management.validityDuration = static_cast<long*>(calloc(sizeof(long), 1));
 	*denm->denm.management.validityDuration = 60;
 
-    if(triggerContent == "SpeedLimit") {
+	Json::Value parsedContent = parseJSONTriggerContent(triggerContent);
+    if(parsedContent.get("alacarte", false) == true) {
         mLogger->logInfo("Generating Alacarte");
-        denm->denm.alacarte = generateAlacarteContainer();
+        denm->denm.alacarte = generateAlacarteContainer(parsedContent);
     }
 	return denm;
 }
 
-AlacarteContainer_t* DenService::generateAlacarteContainer() {
-    // TODO: Replace static speedLim with parsed from JSON
-    int64_t speedLim = 10;
-
+AlacarteContainer_t* DenService::generateAlacarteContainer(Json::Value content) {
     auto *alacarteContainer = static_cast<AlacarteContainer_t*>(calloc(1, sizeof(AlacarteContainer_t)));
-    alacarteContainer->speedLimit = static_cast<SpeedLimitContainer_t*>(calloc(1, sizeof(SpeedLimitContainer_t)));
-    //
-    alacarteContainer->speedLimit->speedLimit = new SpeedLimit_t(speedLim);
+
+    if (content.get("type", "") == "SpeedLimit") {
+        alacarteContainer->speedLimit = static_cast<SpeedLimitContainer_t *>(calloc(1, sizeof(SpeedLimitContainer_t)));
+
+        uint32_t limit = content.get("speedLimit", 0).asUInt();
+        if (limit != 0) {
+            alacarteContainer->speedLimit->speedLimit = new SpeedLimit_t(limit);
+        }
+    }
 
     return alacarteContainer;
 }
@@ -291,6 +296,19 @@ denmPackage::DENM DenService::convertAsn1toProtoBuf(DENM_t* denm) {
 	denmMsg->set_allocated_managementcontainer(mgtCtr);
 	denmProto.set_allocated_msg(denmMsg);
 	return denmProto;
+}
+
+Json::Value DenService::parseJSONTriggerContent(std::string content) {
+    mLogger->logInfo(content);
+    Json::Reader reader;
+    Json::Value value;
+    if (reader.parse(content, value)) {
+        mLogger->logInfo("DENM content JSON-parsed successfully");
+    } else {
+        mLogger->logInfo("Error while JSON-parsing DENM content");
+    }
+
+    return value;
 }
 
 int main(int argc, const char* argv[]) {

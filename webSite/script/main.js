@@ -64,12 +64,17 @@ denmData = {
 							"messageID" : denm.header.messageID,
 							"stationID" : denm.header.stationID
 						};
-		table["denm"] = {
+		table["mgmt"] = {
 							"latitude" : denm.msg.managementContainer.latitude/10000000,
 							"longitude" : denm.msg.managementContainer.longitude/10000000,
 							"altitude" : denm.msg.managementContainer.altitude,
-							"stationType" : isVehicle
+							"stationType" : isVehicle,
 						};
+		if(denm.msg.alacarteContainer !== undefined) {
+			table["alacarte"] = {
+				"speedLimit": denm.msg.alacarteContainer.speedLimit
+			}
+		}
 		if(callback){
 			callback(table);
 		} else {
@@ -92,12 +97,11 @@ denmData = {
 						"latitude" : denm.msg.managementContainer.latitude/10000000,
 						"longitude" : denm.msg.managementContainer.longitude/10000000,
 						"altitude" : denm.msg.managementContainer.altitude,
-						"stationType" : isVehicle
+						"stationType" : isVehicle,
+						"speedLimit" : denm.msg.alacarteContainer.speedLimit
 					}
-					
 				}
-				
-			})
+			});
 			callback(table);
 		}
 	},

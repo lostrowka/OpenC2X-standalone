@@ -157,7 +157,15 @@ function requestAC_VI(callback){
  * via http request to httpServer
  */
 function triggerDenm(){
-	$.post(host + ":1188/trigger_denm",JSON.stringify({content: "triggered by GUI"}),
+	$.post(host + ":1188/trigger_denm",JSON.stringify({content: "GUI"}),
+		function(data,status,xhr){
+			console.log("data: "+data);
+			console.log("status: "+status);
+		});
+}
+
+function triggerSpeedLimitDenm(){
+	$.post(host + ":1188/trigger_denm",JSON.stringify({content: "SpeedLimit"}),
 		function(data,status,xhr){
 			console.log("data: "+data);
 			console.log("status: "+status);

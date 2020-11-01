@@ -1,0 +1,6 @@
+package its;
+
+message DENMAlacarteContainer {
+    //this proto ignores other optional fields
+	optional int64 speedLimit = 1;
+}

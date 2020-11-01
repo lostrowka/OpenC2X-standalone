@@ -48,5 +48,7 @@ protoc --proto_path=./ --cpp_out=build/ DENMessage.proto
 
 protoc --proto_path=./ --cpp_out=build/ DENMManagementContainer.proto
 
+protoc --proto_path=./ --cpp_out=build/ DENMAlacarteContainer.proto
+
 protoc --proto_path=./ --cpp_out=build/ denm.proto
 

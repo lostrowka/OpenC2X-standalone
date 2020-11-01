@@ -20,7 +20,7 @@
  *  @{
  */
 
-var host = "http://"+window.location.hostname;
+var host = "http://" + (window.location.hostname.length > 0 ? window.location.hostname : "localhost");
 
 /**
  * requests local MAC address.

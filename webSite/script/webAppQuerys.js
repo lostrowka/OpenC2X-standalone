@@ -179,6 +179,7 @@ jsonOptions = `{
 			"deltaAltitude": -10
 		},
 		"trafficDirection": 0
+	}
 }`;
 function triggerSpeedLimitDenm(){
 	$.post(host + ":1188/trigger_denm",JSON.stringify({content: jsonOptions}),

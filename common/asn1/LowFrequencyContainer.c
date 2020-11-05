@@ -24,7 +24,7 @@ static asn_TYPE_member_t asn_MBR_LowFrequencyContainer_1[] = {
 		},
 };
 static asn_TYPE_tag2member_t asn_MAP_LowFrequencyContainer_tag2el_1[] = {
-    { (ASN_TAG_CLASS_CONTEXT | (0 << 2)), 0, 0, 0 } /* basicVehicleContainerLowFrequency at 173 */
+    { (ASN_TAG_CLASS_CONTEXT | (0 << 2)), 0, 0, 0 } /* basicVehicleContainerLowFrequency at 176 */
 };
 static asn_CHOICE_specifics_t asn_SPC_LowFrequencyContainer_specs_1 = {
 	sizeof(struct LowFrequencyContainer),

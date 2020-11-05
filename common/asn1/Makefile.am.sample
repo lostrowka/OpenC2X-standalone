@@ -144,6 +144,7 @@ ASN_MODULE_SOURCES=	\
 	ProtectedZoneType.c	\
 	RelevanceDistance.c	\
 	RelevanceTrafficDirection.c	\
+	TrafficDirection.c	\
 	TransmissionInterval.c	\
 	ValidityDuration.c	\
 	ActionID.c	\
@@ -308,6 +309,7 @@ ASN_MODULE_HEADERS=	\
 	ProtectedZoneType.h	\
 	RelevanceDistance.h	\
 	RelevanceTrafficDirection.h	\
+	TrafficDirection.h	\
 	TransmissionInterval.h	\
 	ValidityDuration.h	\
 	ActionID.h	\

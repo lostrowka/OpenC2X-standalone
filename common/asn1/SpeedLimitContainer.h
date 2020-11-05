@@ -13,15 +13,22 @@
 
 /* Including external dependencies */
 #include "SpeedLimit.h"
+#include "TrafficDirection.h"
 #include <constr_SEQUENCE.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+/* Forward declarations */
+struct DeltaReferencePosition;
+
 /* SpeedLimitContainer */
 typedef struct SpeedLimitContainer {
 	SpeedLimit_t	*speedLimit	/* OPTIONAL */;
+	struct DeltaReferencePosition	*startingPointSpeedLimit	/* OPTIONAL */;
+	struct DeltaReferencePosition	*endingPointSpeedLimit	/* OPTIONAL */;
+	TrafficDirection_t	*trafficDirection	/* OPTIONAL */;
 	
 	/* Context for parsing across buffer boundaries */
 	asn_struct_ctx_t _asn_ctx;
@@ -33,6 +40,9 @@ extern asn_TYPE_descriptor_t asn_DEF_SpeedLimitContainer;
 #ifdef __cplusplus
 }
 #endif
+
+/* Referred external types */
+#include "DeltaReferencePosition.h"
 
 #endif	/* _SpeedLimitContainer_H_ */
 #include <asn_internal.h>

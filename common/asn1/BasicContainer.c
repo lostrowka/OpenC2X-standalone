@@ -31,8 +31,8 @@ static ber_tlv_tag_t asn_DEF_BasicContainer_tags_1[] = {
 	(ASN_TAG_CLASS_UNIVERSAL | (16 << 2))
 };
 static asn_TYPE_tag2member_t asn_MAP_BasicContainer_tag2el_1[] = {
-    { (ASN_TAG_CLASS_CONTEXT | (0 << 2)), 0, 0, 0 }, /* stationType at 189 */
-    { (ASN_TAG_CLASS_CONTEXT | (1 << 2)), 1, 0, 0 } /* referencePosition at 190 */
+    { (ASN_TAG_CLASS_CONTEXT | (0 << 2)), 0, 0, 0 }, /* stationType at 192 */
+    { (ASN_TAG_CLASS_CONTEXT | (1 << 2)), 1, 0, 0 } /* referencePosition at 193 */
 };
 static asn_SEQUENCE_specifics_t asn_SPC_BasicContainer_specs_1 = {
 	sizeof(struct BasicContainer),

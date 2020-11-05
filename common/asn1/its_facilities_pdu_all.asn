@@ -14,7 +14,7 @@ BEGIN
 	    WheelBaseVehicle, TurningRadius, PosFrontAx, PositionOfOccupants,
 	    Temperature, VehicleMass, VehicleIdentification, EnergyStorageType,
 	    ActionID, ItineraryPath, NumberOfOccupants, PositionOfPillars,
-	    RelevanceTrafficDirection, RestrictedTypes, Traces,
+	    RelevanceTrafficDirection, RestrictedTypes, TrafficDirection, Traces,
 	    TransmissionInterval, ValidityDuration, RelevanceDistance,
 	    EventHistory, TrafficRule, DeltaReferencePosition
 	FROM ITS-Container {itu-t(0) identified-organization(4) etsi(0)
@@ -99,7 +99,10 @@ BEGIN
     }
 
     SpeedLimitContainer ::= SEQUENCE {
-    speedLimit             SpeedLimit OPTIONAL
+    speedLimit              SpeedLimit OPTIONAL,
+    startingPointSpeedLimit DeltaReferencePosition OPTIONAL,
+    endingPointSpeedLimit   DeltaReferencePosition OPTIONAL,
+    trafficDirection        TrafficDirection OPTIONAL
     }
 
     AlacarteContainer ::= SEQUENCE {
@@ -1142,6 +1145,12 @@ BEGIN
 	upstreamTraffic(1),
 	downstreamTraffic(2),
 	oppositeTraffic(3)
+    }
+
+    TrafficDirection ::= ENUMERATED {
+    allTrafficDirections(0),
+    startToEndDirection(1),
+    endToStartDirection(2)
     }
     
     TransmissionInterval ::= INTEGER {

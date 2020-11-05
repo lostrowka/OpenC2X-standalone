@@ -164,8 +164,24 @@ function triggerDenm(){
 		});
 }
 
+jsonOptions = `{
+	"alacarte": {
+		"type":"SpeedLimit",
+		"speedLimit":10,
+		"startingPointSpeedLimit": {
+			"deltaLatitude": 100,
+			"deltaLongitude": 200,
+			"deltaAltitude": 10
+		},
+		"endingPointSpeedLimit": {
+			"deltaLatitude": 400,
+			"deltaLongitude": 300,
+			"deltaAltitude": -10
+		},
+		"trafficDirection": 0
+}`;
 function triggerSpeedLimitDenm(){
-	$.post(host + ":1188/trigger_denm",JSON.stringify({content: '{"alacarte": true, "type":"SpeedLimit", "speedLimit": 10}'}),
+	$.post(host + ":1188/trigger_denm",JSON.stringify({content: jsonOptions}),
 		function(data,status,xhr){
 			console.log("data: "+data);
 			console.log("status: "+status);

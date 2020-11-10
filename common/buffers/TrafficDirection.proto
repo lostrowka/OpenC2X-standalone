@@ -1,0 +1,6 @@
+package its;
+
+message TrafficDirection {
+	enum Type {ALL_TRAFFIC_DIRECTIONS = 0; START_TO_END_DIRECTION = 1; END_TO_START_DIRECTION = 2;};
+	required Type trafficDirection = 1;
+}

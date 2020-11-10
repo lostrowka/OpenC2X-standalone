@@ -1,0 +1,12 @@
+package its;
+import "SpeedLimit.proto";
+import "DeltaReferencePosition.proto";
+import "TrafficDirection.proto";
+
+
+message SpeedLimitContainer {
+	optional SpeedLimit speedLimit = 1;
+    optional DeltaReferencePosition startingPointSpeedLimit = 2;
+    optional DeltaReferencePosition endingPointSpeedLimit = 3;
+    optional TrafficDirection trafficDirection = 4;
+}

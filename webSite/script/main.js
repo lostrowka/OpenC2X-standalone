@@ -59,6 +59,7 @@ denmData = {
 		var table = {};
 		var denm = denmData.denms.get(denmData.mymac);
 		var isVehicle = (denm.msg.managementContainer.stationType === 5) ? "Vehicle" : "RSU";
+		console.log(denm)
 		table["header"] = {
 							"protocolVersion" : denm.header.protocolVersion,
 							"messageID" : denm.header.messageID,
@@ -72,14 +73,14 @@ denmData = {
 						};
 		if(denm.msg.alacarteContainer !== undefined) {
 			table["alacarte"] = {
-				"speedLimit": denm.msg.alacarteContainer.speedLimit,
-				"startPoint_lat": denm.msg.alacarteContainer.startingPointSpeedLimit_deltaLatitude,
-				"startPoint_lon": denm.msg.alacarteContainer.startingPointSpeedLimit_deltaLongitude,
-				"startPoint_alt": denm.msg.alacarteContainer.startingPointSpeedLimit_deltaAltitude,
-				"endPoint_lat": denm.msg.alacarteContainer.endingPointSpeedLimit_deltaLatitude,
-				"endPoint_lon": denm.msg.alacarteContainer.endingPointSpeedLimit_deltaLongitude,
-				"endPoint_alt": denm.msg.alacarteContainer.endingPointSpeedLimit_deltaAltitude,
-				"traffic": denm.msg.alacarteContainer.trafficDirection
+				"speedLimit": denm.msg.alacarteContainer.speedLimitContainer.speedLimit.speedLimit,
+				"startPoint_lat": denm.msg.alacarteContainer.speedLimitContainer.startingPointSpeedLimit.deltaLatitude,
+				"startPoint_lon": denm.msg.alacarteContainer.speedLimitContainer.startingPointSpeedLimit.deltaLongitude,
+				"startPoint_alt": denm.msg.alacarteContainer.speedLimitContainer.startingPointSpeedLimit.deltaAltitude,
+				"endPoint_lat": denm.msg.alacarteContainer.speedLimitContainer.endingPointSpeedLimit.deltaLatitude,
+				"endPoint_lon": denm.msg.alacarteContainer.speedLimitContainer.endingPointSpeedLimit.deltaLongitude,
+				"endPoint_alt": denm.msg.alacarteContainer.speedLimitContainer.endingPointSpeedLimit.deltaAltitude,
+				"traffic": denm.msg.alacarteContainer.speedLimitContainer.trafficDirection.trafficDirection
 			}
 		}
 		if(callback){
@@ -107,14 +108,14 @@ denmData = {
 						"stationType" : isVehicle,
 					}
 					if (denm.msg.alacarteContainer != undefined) {
-						table[stationID]["speedLimit"] = denm.msg.alacarteContainer.speedLimit;
-						table[stationID]["startPoint_lat"] = denm.msg.alacarteContainer.startingPointSpeedLimit_deltaLatitude;
-						table[stationID]["startPoint_lon"] = denm.msg.alacarteContainer.startingPointSpeedLimit_deltaLongitude;
-						table[stationID]["startPoint_alt"] = denm.msg.alacarteContainer.startingPointSpeedLimit_deltaAltitude;
-						table[stationID]["endPoint_lat"] = denm.msg.alacarteContainer.endingPointSpeedLimit_deltaLatitude;
-						table[stationID]["endPoint_lon"] = denm.msg.alacarteContainer.endingPointSpeedLimit_deltaLongitude;
-						table[stationID]["endPoint_alt"] = denm.msg.alacarteContainer.endingPointSpeedLimit_deltaAltitude;
-						table[stationID]["traffic"] = denm.msg.alacarteContainer.trafficDirection;
+						table[stationID]["speedLimit"] = denm.msg.alacarteContainer.speedLimitContainer.speedLimit.speedLimit;
+						table[stationID]["startPoint_lat"] = denm.msg.alacarteContainer.speedLimitContainer.startingPointSpeedLimit.deltaLatitude;
+						table[stationID]["startPoint_lon"] = denm.msg.alacarteContainer.speedLimitContainer.startingPointSpeedLimit.deltaLongitude;
+						table[stationID]["startPoint_alt"] = denm.msg.alacarteContainer.speedLimitContainer.startingPointSpeedLimit.deltaAltitude;
+						table[stationID]["endPoint_lat"] = denm.msg.alacarteContainer.speedLimitContainer.endingPointSpeedLimit.deltaLatitude;
+						table[stationID]["endPoint_lon"] = denm.msg.alacarteContainer.speedLimitContainer.endingPointSpeedLimit.deltaLongitude;
+						table[stationID]["endPoint_alt"] = denm.msg.alacarteContainer.speedLimitContainer.endingPointSpeedLimit.deltaAltitude;
+						table[stationID]["traffic"] = denm.msg.alacarteContainer.speedLimitContainer.trafficDirection.trafficDirection;
 					}
 				}
 			});

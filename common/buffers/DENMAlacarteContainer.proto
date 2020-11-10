@@ -1,12 +1,6 @@
 package its;
+import "SpeedLimitContainer.proto";
 
 message DENMAlacarteContainer {
-	optional int64 speedLimit = 1;
-	optional int64 startingPointSpeedLimit_deltaLatitude = 2;
-	optional int64 startingPointSpeedLimit_deltaLongitude = 3;
-	optional int64 startingPointSpeedLimit_deltaAltitude = 4;
-	optional int64 endingPointSpeedLimit_deltaLatitude = 5;
-    optional int64 endingPointSpeedLimit_deltaLongitude = 6;
-    optional int64 endingPointSpeedLimit_deltaAltitude = 7;
-    optional int64 trafficDirection = 8;
+	optional SpeedLimitContainer speedLimitContainer = 1;
 }

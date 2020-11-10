@@ -1,0 +1,5 @@
+package its;
+
+message SpeedLimit {
+	required int64 speedLimit = 1;
+}

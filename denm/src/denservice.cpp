@@ -113,6 +113,16 @@ void DenService::receive() {
 		denmPackage::DENM denmProto = convertAsn1toProtoBuf(denm);
 		denmProto.SerializeToString(&serializedProtoDenm);
 
+		mLogger->logInfo("Received DENM from station no. " + to_string(denm->header.stationID));
+		std::string denmType = "management";
+		if (denm->denm.alacarte != nullptr) {
+			denmType = "alacarte";
+			if(denm->denm.alacarte->speedLimit != nullptr) {
+				denmType = "speedLimit";
+			}
+		}
+		mLogger->logInfo("DENM type: " + denmType);
+
 		mLogger->logInfo("forward incoming DENM " + to_string(denm->header.stationID) + " to LDM");
 		mSenderToLdm->send(envelope, serializedProtoDenm);
 	}

@@ -54,6 +54,16 @@ denmData = {
 			})
 		}
 	},
+	getTrafficString(trafficId) {
+		switch (trafficId) {
+			case 0:
+				return "Bidirectional";
+			case 1:
+				return "Start to end";
+			case 2:
+				return "End to start";
+		}
+	},
 	getLastOwnDenm : function(callback){
 		denmData.init();
 		var table = {};
@@ -80,7 +90,7 @@ denmData = {
 				"endPoint_lat": denm.msg.alacarteContainer.speedLimitContainer.endingPointSpeedLimit.deltaLatitude,
 				"endPoint_lon": denm.msg.alacarteContainer.speedLimitContainer.endingPointSpeedLimit.deltaLongitude,
 				"endPoint_alt": denm.msg.alacarteContainer.speedLimitContainer.endingPointSpeedLimit.deltaAltitude,
-				"traffic": denm.msg.alacarteContainer.speedLimitContainer.trafficDirection.trafficDirection
+				"traffic": this.getTrafficString(denm.msg.alacarteContainer.speedLimitContainer.trafficDirection.trafficDirection)
 			}
 		}
 		if(callback){
@@ -115,7 +125,7 @@ denmData = {
 						table[stationID]["endPoint_lat"] = denm.msg.alacarteContainer.speedLimitContainer.endingPointSpeedLimit.deltaLatitude;
 						table[stationID]["endPoint_lon"] = denm.msg.alacarteContainer.speedLimitContainer.endingPointSpeedLimit.deltaLongitude;
 						table[stationID]["endPoint_alt"] = denm.msg.alacarteContainer.speedLimitContainer.endingPointSpeedLimit.deltaAltitude;
-						table[stationID]["traffic"] = denm.msg.alacarteContainer.speedLimitContainer.trafficDirection.trafficDirection;
+						table[stationID]["traffic"] = this.getTrafficString(denm.msg.alacarteContainer.speedLimitContainer.trafficDirection.trafficDirection);
 					}
 				}
 			});

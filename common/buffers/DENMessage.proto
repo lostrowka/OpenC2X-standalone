@@ -5,5 +5,4 @@ import "DENMAlacarteContainer.proto";
 message DENMessage {
 	required its.DENMManagementContainer managementContainer = 1;
 	optional its.DENMAlacarteContainer alacarteContainer = 2;
-	// ignore optional fields as of now
 }

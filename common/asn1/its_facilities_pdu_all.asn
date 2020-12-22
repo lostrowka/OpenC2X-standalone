@@ -1148,9 +1148,9 @@ BEGIN
     }
 
     TrafficDirection ::= ENUMERATED {
-    allTrafficDirections(0),
-    startToEndDirection(1),
-    endToStartDirection(2)
+        allTrafficDirections(0),
+        startToEndDirection(1),
+        endToStartDirection(2)
     }
     
     TransmissionInterval ::= INTEGER {

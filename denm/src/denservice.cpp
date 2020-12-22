@@ -262,24 +262,22 @@ AlacarteContainer_t* DenService::generateAlacarteContainer(Json::Value content) 
 
         uint32_t limit = content.get("speedLimit", 0).asUInt();
         if (limit != 0) {
-            alacarteContainer->speedLimit->speedLimit = new SpeedLimit_t(limit);
+            alacarteContainer->speedLimit->speedLimit = SpeedLimit_t(limit);
         }
         Json::Value startingPointSpeedLimit = content.get("startingPointSpeedLimit", Json::Value::null);
         if (!startingPointSpeedLimit.isNull()) {
-            alacarteContainer->speedLimit->startingPointSpeedLimit = static_cast<DeltaReferencePosition_t *>(calloc(1, sizeof(DeltaReferencePosition_t)));
-            alacarteContainer->speedLimit->startingPointSpeedLimit->deltaLatitude = startingPointSpeedLimit.get("deltaLatitude", 131072).asInt64();
-            alacarteContainer->speedLimit->startingPointSpeedLimit->deltaLongitude = startingPointSpeedLimit.get("deltaLongitude", 131072).asInt64();
-            alacarteContainer->speedLimit->startingPointSpeedLimit->deltaAltitude = startingPointSpeedLimit.get("deltaAltitude", 12800).asInt64();
+            alacarteContainer->speedLimit->startingPointSpeedLimit.deltaLatitude = startingPointSpeedLimit.get("deltaLatitude", 131072).asInt64();
+            alacarteContainer->speedLimit->startingPointSpeedLimit.deltaLongitude = startingPointSpeedLimit.get("deltaLongitude", 131072).asInt64();
+            alacarteContainer->speedLimit->startingPointSpeedLimit.deltaAltitude = startingPointSpeedLimit.get("deltaAltitude", 12800).asInt64();
         }
         Json::Value endingPointSpeedLimit = content.get("endingPointSpeedLimit", Json::Value::null);
         if (!endingPointSpeedLimit.isNull()) {
-            alacarteContainer->speedLimit->endingPointSpeedLimit = static_cast<DeltaReferencePosition_t *>(calloc(1, sizeof(DeltaReferencePosition_t)));
-            alacarteContainer->speedLimit->endingPointSpeedLimit->deltaLatitude = endingPointSpeedLimit.get("deltaLatitude", 131072).asInt64();
-            alacarteContainer->speedLimit->endingPointSpeedLimit->deltaLongitude = endingPointSpeedLimit.get("deltaLongitude", 131072).asInt64();
-            alacarteContainer->speedLimit->endingPointSpeedLimit->deltaAltitude = endingPointSpeedLimit.get("deltaAltitude", 12800).asInt64();
+            alacarteContainer->speedLimit->endingPointSpeedLimit.deltaLatitude = endingPointSpeedLimit.get("deltaLatitude", 131072).asInt64();
+            alacarteContainer->speedLimit->endingPointSpeedLimit.deltaLongitude = endingPointSpeedLimit.get("deltaLongitude", 131072).asInt64();
+            alacarteContainer->speedLimit->endingPointSpeedLimit.deltaAltitude = endingPointSpeedLimit.get("deltaAltitude", 12800).asInt64();
         }
 
-        alacarteContainer->speedLimit->trafficDirection = new TrafficDirection_t(content.get("trafficDirection", 0).asInt64());
+        alacarteContainer->speedLimit->trafficDirection = TrafficDirection_t(content.get("trafficDirection", 0).asInt64());
     }
 
     return alacarteContainer;
@@ -318,41 +316,34 @@ denmPackage::DENM DenService::convertAsn1toProtoBuf(DENM_t* denm) {
 		// A La Carte Container is optional
 		auto* speedLimitContainer = new its::SpeedLimitContainer;
 
-		if(denm->denm.alacarte->speedLimit->speedLimit != nullptr) {
+		if(denm->denm.alacarte->speedLimit != nullptr) {
 			auto *speedLimit = new its::SpeedLimit;
-			speedLimit->set_speedlimit(
-					*denm->denm.alacarte->speedLimit->speedLimit);
+			speedLimit->set_speedlimit(denm->denm.alacarte->speedLimit->speedLimit);
 
 			speedLimitContainer->set_allocated_speedlimit(speedLimit);
-		}
 
-		if(denm->denm.alacarte->speedLimit->startingPointSpeedLimit != nullptr) {
 			auto *startingPointSpeedLimit = new its::DeltaReferencePosition;
 			startingPointSpeedLimit->set_deltalatitude(
-					denm->denm.alacarte->speedLimit->startingPointSpeedLimit->deltaLatitude);
+					denm->denm.alacarte->speedLimit->startingPointSpeedLimit.deltaLatitude);
 			startingPointSpeedLimit->set_deltalongitude(
-					denm->denm.alacarte->speedLimit->startingPointSpeedLimit->deltaLongitude);
+					denm->denm.alacarte->speedLimit->startingPointSpeedLimit.deltaLongitude);
 			startingPointSpeedLimit->set_deltaaltitude(
-					denm->denm.alacarte->speedLimit->startingPointSpeedLimit->deltaAltitude);
+					denm->denm.alacarte->speedLimit->startingPointSpeedLimit.deltaAltitude);
 
 			speedLimitContainer->set_allocated_startingpointspeedlimit(startingPointSpeedLimit);
-		}
 
-		if(denm->denm.alacarte->speedLimit->endingPointSpeedLimit != nullptr) {
 			auto *endingPointSpeedLimit = new its::DeltaReferencePosition;
 			endingPointSpeedLimit->set_deltalatitude(
-					denm->denm.alacarte->speedLimit->endingPointSpeedLimit->deltaLatitude);
+					denm->denm.alacarte->speedLimit->endingPointSpeedLimit.deltaLatitude);
 			endingPointSpeedLimit->set_deltalongitude(
-					denm->denm.alacarte->speedLimit->endingPointSpeedLimit->deltaLongitude);
+					denm->denm.alacarte->speedLimit->endingPointSpeedLimit.deltaLongitude);
 			endingPointSpeedLimit->set_deltaaltitude(
-					denm->denm.alacarte->speedLimit->endingPointSpeedLimit->deltaAltitude);
+					denm->denm.alacarte->speedLimit->endingPointSpeedLimit.deltaAltitude);
 
 			speedLimitContainer->set_allocated_endingpointspeedlimit(endingPointSpeedLimit);
-		}
 
-		if(denm->denm.alacarte->speedLimit->trafficDirection != nullptr) {
 			auto *trafficDirection = new its::TrafficDirection;
-			trafficDirection->set_trafficdirection(static_cast<its::TrafficDirection_Type>(*denm->denm.alacarte->speedLimit->trafficDirection));
+			trafficDirection->set_trafficdirection(static_cast<its::TrafficDirection_Type>(denm->denm.alacarte->speedLimit->trafficDirection));
 
 			speedLimitContainer->set_allocated_trafficdirection(trafficDirection);
 		}

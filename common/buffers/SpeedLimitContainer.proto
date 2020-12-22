@@ -5,8 +5,8 @@ import "TrafficDirection.proto";
 
 
 message SpeedLimitContainer {
-	optional SpeedLimit speedLimit = 1;
-    optional DeltaReferencePosition startingPointSpeedLimit = 2;
-    optional DeltaReferencePosition endingPointSpeedLimit = 3;
-    optional TrafficDirection trafficDirection = 4;
+    required SpeedLimit speedLimit = 1;
+    required DeltaReferencePosition startingPointSpeedLimit = 2;
+    required DeltaReferencePosition endingPointSpeedLimit = 3;
+    required TrafficDirection trafficDirection = 4;
 }

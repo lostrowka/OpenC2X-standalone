@@ -99,10 +99,10 @@ BEGIN
     }
 
     SpeedLimitContainer ::= SEQUENCE {
-    speedLimit              SpeedLimit OPTIONAL,
-    startingPointSpeedLimit DeltaReferencePosition OPTIONAL,
-    endingPointSpeedLimit   DeltaReferencePosition OPTIONAL,
-    trafficDirection        TrafficDirection OPTIONAL
+        speedLimit              SpeedLimit,
+        startingPointSpeedLimit DeltaReferencePosition,
+        endingPointSpeedLimit   DeltaReferencePosition,
+        trafficDirection        TrafficDirection
     }
 
     AlacarteContainer ::= SEQUENCE {

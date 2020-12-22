@@ -112,7 +112,7 @@ BEGIN
 	roadWorks           RoadWorksContainerExtended OPTIONAL,
 	positioningSolution PositioningSolutionType OPTIONAL,
 	stationaryVehicle   StationaryVehicleContainer OPTIONAL,
-    speedLimit          SpeedLimitContainer OPTIONAL,
+        speedLimit          SpeedLimitContainer OPTIONAL,
 	                    ...
     }
     

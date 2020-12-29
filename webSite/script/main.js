@@ -64,7 +64,7 @@ denmData = {
 				return "End to start";
 		}
 	},
-	getLastOwnDenm : (callback) => {
+	getLastOwnDenm : function(callback) {
 		denmData.init();
 		var table = {};
 		var denm = denmData.denms.get(denmData.mymac);
@@ -99,10 +99,10 @@ denmData = {
 			return table;
 		}
 	},
-	getReceivedDenmDetail : (callback) => {
+	getReceivedDenmDetail : function(callback){
 		if(denmData.init()){
 			var table={};
-			denmData.denms.forEach(function(denm, stationID) {
+			denmData.denms.forEach((denm, stationID) => {
 				if (stationID == denmData.mymac) {
 					// do nothing
 				}
@@ -125,7 +125,7 @@ denmData = {
 						table[stationID]["endPoint_lat"] = denm.msg.alacarteContainer.speedLimitContainer.endingPointSpeedLimit.deltaLatitude;
 						table[stationID]["endPoint_lon"] = denm.msg.alacarteContainer.speedLimitContainer.endingPointSpeedLimit.deltaLongitude;
 						table[stationID]["endPoint_alt"] = denm.msg.alacarteContainer.speedLimitContainer.endingPointSpeedLimit.deltaAltitude;
-						table[stationID]["traffic"] = this.getTrafficString(denm.msg.alacarteContainer.speedLimitContainer.trafficDirection.trafficDirection);
+						table[stationID]["traffic"] = denm.msg.alacarteContainer.speedLimitContainer.trafficDirection.trafficDirection;
 					}
 				}
 			});

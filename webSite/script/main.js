@@ -125,7 +125,7 @@ denmData = {
 						table[stationID]["endPoint_lat"] = denm.msg.alacarteContainer.speedLimitContainer.endingPointSpeedLimit.deltaLatitude;
 						table[stationID]["endPoint_lon"] = denm.msg.alacarteContainer.speedLimitContainer.endingPointSpeedLimit.deltaLongitude;
 						table[stationID]["endPoint_alt"] = denm.msg.alacarteContainer.speedLimitContainer.endingPointSpeedLimit.deltaAltitude;
-						table[stationID]["traffic"] = denm.msg.alacarteContainer.speedLimitContainer.trafficDirection.trafficDirection;
+						table[stationID]["traffic"] = this.getTrafficString(denm.msg.alacarteContainer.speedLimitContainer.trafficDirection.trafficDirection);
 					}
 				}
 			});

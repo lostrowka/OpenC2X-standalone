@@ -180,7 +180,13 @@ void DenService::send(triggerPackage::TRIGGER trigger) {
     // create denm
 	DENM_t* denm = generateDenm(trigger.content());
 	// asn_fprint(stdout, &asn_DEF_DENM, denm);
-	vector<uint8_t> encodedDenm = mMsgUtils->encodeMessage(&asn_DEF_DENM, denm);
+    vector<uint8_t> encodedDenm;
+	try {
+        encodedDenm = mMsgUtils->encodeMessage(&asn_DEF_DENM, denm);
+    } catch(const runtime_error& error) {
+	    mLogger->logError("Error while encoding message");
+	    return;
+	}
 	string strDenm(encodedDenm.begin(), encodedDenm.end());
 	mLogger->logDebug("Encoded DENM size: " + to_string(strDenm.length()));
 
@@ -246,42 +252,44 @@ DENM_t* DenService::generateDenm(std::string triggerContent) {
 	denm->denm.management.validityDuration = static_cast<long*>(calloc(sizeof(long), 1));
 	*denm->denm.management.validityDuration = 60;
 
-	Json::Value parsedContent = parseJSONTriggerContent(triggerContent);
-    if(!parsedContent.get("alacarte", Json::Value::null).isNull()) {
-        mLogger->logInfo("Generating Alacarte");
-        denm->denm.alacarte = generateAlacarteContainer(parsedContent["alacarte"]);
-    }
-	return denm;
-}
-
-AlacarteContainer_t* DenService::generateAlacarteContainer(Json::Value content) {
-    auto *alacarteContainer = static_cast<AlacarteContainer_t*>(calloc(1, sizeof(AlacarteContainer_t)));
-
-    if (content.get("type", "") == "SpeedLimit") {
-        alacarteContainer->speedLimit = static_cast<SpeedLimitContainer_t *>(calloc(1, sizeof(SpeedLimitContainer_t)));
-
-        uint32_t limit = content.get("speedLimit", 0).asUInt();
-        if (limit != 0) {
-            alacarteContainer->speedLimit->speedLimit = SpeedLimit_t(limit);
+        Json::Value parsedContent = parseJSONTriggerContent(triggerContent);
+        if(!parsedContent.get("alacarte", Json::Value::null).isNull()) {
+            mLogger->logInfo("Generating Alacarte");
+            denm->denm.alacarte = generateAlacarteContainer(parsedContent["alacarte"]);
         }
-        Json::Value startingPointSpeedLimit = content.get("startingPointSpeedLimit", Json::Value::null);
-        if (!startingPointSpeedLimit.isNull()) {
-            alacarteContainer->speedLimit->startingPointSpeedLimit.deltaLatitude = startingPointSpeedLimit.get("deltaLatitude", 131072).asInt64();
-            alacarteContainer->speedLimit->startingPointSpeedLimit.deltaLongitude = startingPointSpeedLimit.get("deltaLongitude", 131072).asInt64();
-            alacarteContainer->speedLimit->startingPointSpeedLimit.deltaAltitude = startingPointSpeedLimit.get("deltaAltitude", 12800).asInt64();
-        }
-        Json::Value endingPointSpeedLimit = content.get("endingPointSpeedLimit", Json::Value::null);
-        if (!endingPointSpeedLimit.isNull()) {
-            alacarteContainer->speedLimit->endingPointSpeedLimit.deltaLatitude = endingPointSpeedLimit.get("deltaLatitude", 131072).asInt64();
-            alacarteContainer->speedLimit->endingPointSpeedLimit.deltaLongitude = endingPointSpeedLimit.get("deltaLongitude", 131072).asInt64();
-            alacarteContainer->speedLimit->endingPointSpeedLimit.deltaAltitude = endingPointSpeedLimit.get("deltaAltitude", 12800).asInt64();
-        }
-
-        alacarteContainer->speedLimit->trafficDirection = TrafficDirection_t(content.get("trafficDirection", 0).asInt64());
+        return denm;
     }
 
-    return alacarteContainer;
-}
+    AlacarteContainer_t* DenService::generateAlacarteContainer(Json::Value content) {
+        auto *alacarteContainer =
+                static_cast<AlacarteContainer_t*>(calloc(1, sizeof(AlacarteContainer_t)));
+
+        if (content.get("type", "") == "SpeedLimit") {
+            alacarteContainer->speedLimit =
+                    static_cast<SpeedLimitContainer_t *>(calloc(1, sizeof(SpeedLimitContainer_t)));
+
+            uint32_t limit = content.get("speedLimit", 0).asInt();
+            if (limit >= 0) {
+                alacarteContainer->speedLimit->speedLimit = SpeedLimit_t(limit);
+            }
+            Json::Value startingPointSpeedLimit = content.get("startingPointSpeedLimit", Json::Value::null);
+            if (!startingPointSpeedLimit.isNull()) {
+                alacarteContainer->speedLimit->startingPointSpeedLimit.deltaLatitude = startingPointSpeedLimit.get("deltaLatitude", 131072).asInt64();
+                alacarteContainer->speedLimit->startingPointSpeedLimit.deltaLongitude = startingPointSpeedLimit.get("deltaLongitude", 131072).asInt64();
+                alacarteContainer->speedLimit->startingPointSpeedLimit.deltaAltitude = startingPointSpeedLimit.get("deltaAltitude", 12800).asInt64();
+            }
+            Json::Value endingPointSpeedLimit = content.get("endingPointSpeedLimit", Json::Value::null);
+            if (!endingPointSpeedLimit.isNull()) {
+                alacarteContainer->speedLimit->endingPointSpeedLimit.deltaLatitude = endingPointSpeedLimit.get("deltaLatitude", 131072).asInt64();
+                alacarteContainer->speedLimit->endingPointSpeedLimit.deltaLongitude = endingPointSpeedLimit.get("deltaLongitude", 131072).asInt64();
+                alacarteContainer->speedLimit->endingPointSpeedLimit.deltaAltitude = endingPointSpeedLimit.get("deltaAltitude", 12800).asInt64();
+            }
+
+            alacarteContainer->speedLimit->trafficDirection = TrafficDirection_t(content.get("trafficDirection", 0).asInt64());
+        }
+
+        return alacarteContainer;
+    }
 
 denmPackage::DENM DenService::convertAsn1toProtoBuf(DENM_t* denm) {
 	denmPackage::DENM denmProto;
@@ -293,14 +301,12 @@ denmPackage::DENM DenService::convertAsn1toProtoBuf(DENM_t* denm) {
 	header->set_stationid(denm->header.stationID);
 	denmProto.set_allocated_header(header);
 
-	// DENM containers
 	auto* denmMsg = new its::DENMessage;
 	auto* mgtCtr = new its::DENMManagementContainer;
 	auto* alcCtr = new its::DENMAlacarteContainer;
 	mgtCtr->set_stationid(denm->denm.management.actionID.originatingStationID);
 	mgtCtr->set_sequencenumber(denm->denm.management.actionID.sequenceNumber);
-	//mgtCtr->set_detectiontime(denm->denm.management.detectionTime);
-	//mgtCtr->set_referencetime(denm->denm.management.referenceTime);
+
 	mgtCtr->set_latitude(denm->denm.management.eventPosition.latitude);
 	mgtCtr->set_longitude(denm->denm.management.eventPosition.longitude);
 	mgtCtr->set_semimajorconfidence(denm->denm.management.eventPosition.positionConfidenceEllipse.semiMajorConfidence);

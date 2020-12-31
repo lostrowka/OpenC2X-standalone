@@ -69,7 +69,6 @@ denmData = {
 		var table = {};
 		var denm = denmData.denms.get(denmData.mymac);
 		var isVehicle = (denm.msg.managementContainer.stationType === 5) ? "Vehicle" : "RSU";
-		console.log(denm)
 		table["header"] = {
 							"protocolVersion" : denm.header.protocolVersion,
 							"messageID" : denm.header.messageID,
